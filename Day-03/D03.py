@@ -22,8 +22,8 @@ with open(file) as f:
     for row, line in enumerate(lines):
         nums = re.findall(r'\d+', line)
         for n in nums:
-            span = re.search(n, line).span()
-            numbers[n] = row, (span[0], span[1] - 1)
+            column = re.search(n, line).span()
+            numbers[n] = row, (column[0], column[1] - 1)
             # print(part_IDs[n])
 
         # syms = re.findall(r'[*#+$]', line)
@@ -31,9 +31,9 @@ with open(file) as f:
         syms = re.findall(r'\W', line)
         # print(syms)
         for sym in syms:
-            regexp = '\\' + sym
-            span = re.search(regexp, line).span()
-            symbols.append((row, span[0]))
+            regex = '\\' + sym
+            column = re.search(regex, line).span()[0]
+            symbols.append((row, column))
 
 for number in numbers:
     # print(number)
