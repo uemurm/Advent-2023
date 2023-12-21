@@ -7,8 +7,8 @@ def is_part_ID(params):
     row, (begin, end) = params
 
     for symbol in symbols:
-        if row == 0:
-            print(begin, end, symbol)
+        # if row == 0:
+        #     print(begin, end, symbol)
         if row - 1 <= symbol[0] and symbol[0] <= row + 1:
             if begin - 1 <= symbol[1] and symbol[1] <= end + 1:
                 return True
@@ -29,12 +29,16 @@ with open(file) as f:
         # syms = re.findall(r'[*#+$]', line)
         line = re.sub(r'\.', 'A', line)
         syms = re.findall(r'\W', line)
-        # print(syms)
+        if row == 1:
+            print(syms)
         for sym in syms:
             regex = '\\' + sym
             column = re.search(regex, line).span()[0]
+            if row == 1:
+                print(column)
             symbols.append((row, column))
-
+        if row == 1:
+            print(symbols)
 for number in numbers:
     # print(number)
     if is_part_ID(numbers[number]):
