@@ -29,8 +29,8 @@ args = parser.parse_args()
 
 maps = MapList()
 
-f = open(FILE_NAME, 'r', -1, 'UTF-8')
-lines = f.read().splitlines()
+with open(FILE_NAME, 'r', -1, 'UTF-8') as file:
+    lines = file.read().splitlines()
 
 IS_MAP = False
 for row, line in enumerate(lines, 1):
