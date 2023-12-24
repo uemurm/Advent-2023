@@ -9,6 +9,23 @@ FILE_NAME = 'Day-05/input-0.txt'
 FILE_NAME = 'Day-05/example-1.txt'
 # FILE_NAME = 'Day-05/example-0.txt'
 
+class MyMap:
+    """
+    kk
+    """
+    def __init__(self, map_lines):
+        self.map_lines = map_lines
+
+    def get(self, key):
+        """
+        docstring
+        """
+        for map_line in self.map_lines:
+            dst, src, size = map_line
+            if src <= key <= src + size:
+                return dst + (key - src)
+        return key
+
 class MapList(list):
     """
     A list of maps to map seed numbers to their locations.
@@ -18,10 +35,9 @@ class MapList(list):
         """
         Input a seed number to find out its location.
         """
-        v = num
-        for my_map in self:
-            v = my_map.get(v, v)   # Return the same value unless the key exists.
-        return v
+        for a_map in self:
+            num = a_map.get(num)   # Return the same value unless the key exists.
+        return num
 
 parser = argparse.ArgumentParser(description='Transform seed numbers to their locations.')
 parser.add_argument('-d', '--debug', help='Print debug info.', action='store_true')
@@ -38,21 +54,15 @@ for row, line in enumerate(lines, 1):
         seeds = list(map(int, re.findall(r'\d+', line)))
     elif re.search(r'map:$', line):
         IS_MAP = True
-        m = {}
-
-    elif IS_MAP and len(line) == 0:
+        my_map = {}
+        sub_maps = []
+    elif IS_MAP and len(line) == 0: # Detect end of each map.
         IS_MAP = False
-        if args.debug:
-            print('m:\n', m)
-        maps.append(m)
-
+        my_map = MyMap(sub_maps)
+        maps.append(my_map)
     elif IS_MAP:
         dst_st, src_st, length = map(int, re.findall(r'\d+', line))
-        for i in range(length):
-            m[src_st + i] = dst_st + i
-
-    if args.debug:
-        print(row, 'maps:\n', maps)
+        sub_maps.append((dst_st, src_st, length))
 
 LOCATIONS = list(map(maps.input, seeds))
 if args.debug:
