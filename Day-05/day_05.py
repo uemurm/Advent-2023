@@ -5,7 +5,8 @@ import re
 import argparse
 
 FILE_NAME = 'Day-05/input.txt'
-# FILE_NAME = 'Day-05/example-1.txt'
+FILE_NAME = 'Day-05/input-0.txt'
+FILE_NAME = 'Day-05/example-1.txt'
 # FILE_NAME = 'Day-05/example-0.txt'
 
 class MapList(list):
@@ -35,6 +36,10 @@ IS_MAP = False
 for row, line in enumerate(lines, 1):
     if re.match(r'^seeds: ', line):
         seeds = list(map(int, re.findall(r'\d+', line)))
+    elif re.search(r'map:$', line):
+        IS_MAP = True
+        m = {}
+
     elif IS_MAP and len(line) == 0:
         IS_MAP = False
         if args.debug:
@@ -46,12 +51,10 @@ for row, line in enumerate(lines, 1):
         for i in range(length):
             m[src_st + i] = dst_st + i
 
-    elif re.search(r'map:$', line):
-        IS_MAP = True
-        m = {}
-
     if args.debug:
         print(row, 'maps:\n', maps)
 
 LOCATIONS = list(map(maps.input, seeds))
+if args.debug:
+    print(LOCATIONS)
 print(min(LOCATIONS))
