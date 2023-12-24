@@ -6,7 +6,7 @@ import argparse
 
 FILE_NAME = 'Day-05/input.txt'
 FILE_NAME = 'Day-05/input-0.txt'
-FILE_NAME = 'Day-05/example-1.txt'
+# FILE_NAME = 'Day-05/example-1.txt'
 # FILE_NAME = 'Day-05/example-0.txt'
 
 class MyMap:
@@ -39,13 +39,14 @@ class MapList(list):
             num = a_map.get(num)   # Return the same value unless the key exists.
         return num
 
-parser = argparse.ArgumentParser(description='Transform seed numbers to their locations.')
-parser.add_argument('-d', '--debug', help='Print debug info.', action='store_true')
+parser = argparse.ArgumentParser(description='Transform seed numbers to their locations')
+parser.add_argument('input_file', help='input file name')
+parser.add_argument('-d', '--debug', help='print debug info', action='store_true')
 args = parser.parse_args()
 
 maps = MapList()
 
-with open(FILE_NAME, 'r', -1, 'UTF-8') as file:
+with open(args.input_file, 'r', -1, 'UTF-8') as file:
     lines = file.read().splitlines()
 
 IS_MAP = False
