@@ -39,16 +39,16 @@ for row, line in enumerate(lines, 1):
             print('m:\n', m)
         maps.append(m)
 
-    if IS_MAP:
+    elif IS_MAP:
         dst_st, src_st, length = map(int, re.findall(r'\d+', line))
         for i in range(length):
             m[src_st + i] = dst_st + i
 
-    if re.search(r'map:$', line):
+    elif re.search(r'map:$', line):
         IS_MAP = True
         m = {}
 
     if args.debug:
         print(row, 'maps:\n', maps)
 
-print(maps.input(79))
+print(maps.input(55))
