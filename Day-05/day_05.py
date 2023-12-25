@@ -5,9 +5,10 @@ import re
 import argparse
 
 FILE_NAME = 'Day-05/input.txt'
-FILE_NAME = 'Day-05/input-0.txt'
+# FILE_NAME = 'Day-05/input-0.txt'
 # FILE_NAME = 'Day-05/example-1.txt'
 # FILE_NAME = 'Day-05/example-0.txt'
+
 
 class MyMap:
     """
@@ -23,21 +24,26 @@ class MyMap:
         for map_line in self.map_lines:
             dst, src, size = map_line
             if src <= key <= src + size:
+                if args.debug:
+                    print(map_line)
                 return dst + (key - src)
         return key
+
 
 class MapList(list):
     """
     A list of maps to map seed numbers to their locations.
     """
-
     def input(self, num):
         """
         Input a seed number to find out its location.
         """
         for a_map in self:
             num = a_map.get(num)   # Return the same value unless the key exists.
+            if args.debug:
+                print(num)
         return num
+
 
 parser = argparse.ArgumentParser(description='Transform seed numbers to their locations')
 parser.add_argument('input_file', help='input file name')
@@ -57,7 +63,7 @@ for row, line in enumerate(lines, 1):
         IS_MAP = True
         my_map = {}
         sub_maps = []
-    elif IS_MAP and len(line) == 0: # Detect end of each map.
+    elif IS_MAP and len(line) == 0:     # Detect end of each map.
         IS_MAP = False
         my_map = MyMap(sub_maps)
         maps.append(my_map)
