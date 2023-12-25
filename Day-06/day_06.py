@@ -36,5 +36,15 @@ for line in lines:
 races = []
 for i, time in enumerate(times):
     races.append((time, distances[i]))
+
+product = 1
 for race in races:
-    print(race)
+    time, record_dist = race
+    win_count = 0
+    for hold_duration in range(1, time + 1):
+        distance = hold_duration * (time - hold_duration)
+        if distance > record_dist:
+            win_count += 1
+    product *= win_count
+
+print(product)
